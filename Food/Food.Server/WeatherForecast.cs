@@ -1,4 +1,4 @@
-namespace FoodOrder
+namespace Food.Server
 {
     public class WeatherForecast
     {

@@ -1,4 +1,6 @@
 .vs/*
 
-FoodOrder/bin/*
-FoodOrder/obj/*
+**/obj/**
+**/bin/**
+
+**/wwwroot/**
