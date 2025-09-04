@@ -10,3 +10,8 @@
     padding-left: 20px;
     border-bottom: 1px solid #aaa;
 }
+
+.modal {
+    background: #ddd;
+    padding: 20px;
+}
