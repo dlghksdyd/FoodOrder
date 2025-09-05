@@ -20,9 +20,4 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="wwwroot\assets\index-CRjCMaHh.css" />
-    <_ContentIncludedByDefault Remove="wwwroot\assets\index-DqzONOX1.js" />
-  </ItemGroup>
-
 </Project>
