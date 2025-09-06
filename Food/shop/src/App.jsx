@@ -1,39 +1,33 @@
 import {useState} from 'react'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Navbar, Container, Nav, Row, Col} from 'react-bootstrap'
-import data from './data.jsx'
+import {Navbar, Container, Nav} from 'react-bootstrap'
+import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
+import MainPage from '@/routes/main.jsx'
+import DetailPage from '@/routes/detail.jsx'
+import data from "@/db/data.jsx";
 
 function App() {
-    
-    let [shoes] = useState(data);
+    let navigate = useNavigate();
 
+    let [shoes] = useState(data);
+    
     return (
         <div className="App">
             <Navbar bg="light" data-bs-theme="light">
                 <Container>
                     <Navbar.Brand href="#home">ShoeShop</Navbar.Brand>
                     <Nav className="me-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#cart">Cart</Nav.Link>
+                        <Nav.Link onClick={() => navigate('')}>Home</Nav.Link>
+                        <Nav.Link onClick={() => navigate('detail/0')}>Detail</Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>
 
-            <div className="main-bg"></div>
-
-            <Container>
-                <Row>
-                    {shoes.map((shoe, index) => (
-                        <Col md={4} className="text-center">
-                            <img src={shoe.imgPath} width="80%" alt=""/>
-                            <h5>{shoe.title}</h5>
-                            <p>{shoe.content}</p>
-                            <p>{shoe.price} 원</p>
-                        </Col>
-                    ))}
-                </Row>
-            </Container>
+            <Routes>
+                <Route path="" element={<MainPage shoes={shoes}/>}></Route>
+                <Route path="detail/:id" element={<DetailPage shoes={shoes}/>}></Route>
+            </Routes>
         </div>
     )
 }
