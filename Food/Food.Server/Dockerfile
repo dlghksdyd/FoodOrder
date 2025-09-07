@@ -10,8 +10,9 @@ EXPOSE 8081
 
 # 이 스테이지는 서비스 프로젝트를 빌드하는 데 사용됩니다.
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS with-node
-RUN apt-get update
-RUN apt-get install curl
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends curl ca-certificates gnupg \
+ && rm -rf /var/lib/apt/lists/*
 RUN curl -sL https://deb.nodesource.com/setup_20.x | bash
 RUN apt-get -y install nodejs
 
@@ -20,7 +21,6 @@ FROM with-node AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Food/Food.Server/Food.Server.csproj", "Food/Food.Server/"]
-COPY ["food.client/food.client.esproj", "food.client/"]
 RUN dotnet restore "./Food/Food.Server/Food.Server.csproj"
 COPY . .
 WORKDIR "/src/Food/Food.Server"
@@ -33,6 +33,13 @@ RUN dotnet publish "./Food.Server.csproj" -c $BUILD_CONFIGURATION -o /app/publis
 
 # 이 스테이지는 프로덕션에서 사용되거나 VS에서 일반 모드로 실행할 때 사용됩니다(디버그 구성을 사용하지 않는 경우 기본값).
 FROM base AS final
+# root로 잠깐 올라가 폴더 만들고 소유권/권한 부여
+USER root
+RUN mkdir -p /app/.aspnet/DataProtection-Keys \
+    && chown app:0 /app/.aspnet/DataProtection-Keys \
+    && chmod 777 /app/.aspnet/DataProtection-Keys
+    
+# 다시 비-root로
 USER $APP_UID
 WORKDIR /app
 COPY --from=publish /app/publish .

@@ -1,6 +1,5 @@
 ﻿import {useState} from "react";
-import data from "@/db/data.jsx";
-import {Container, Row, Col} from 'react-bootstrap'
+import {Container, Row, Col, Button} from 'react-bootstrap'
 import {useNavigate} from "react-router-dom";
 
 function Main(props) {
@@ -15,6 +14,8 @@ function Main(props) {
                     ))}
                 </Row>
             </Container>
+            
+            <button>테스트</button>
         </div>
     )
 }
