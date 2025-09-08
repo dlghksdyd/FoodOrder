@@ -14,8 +14,6 @@ function Main(props) {
                     ))}
                 </Row>
             </Container>
-            
-            <button>테스트</button>
         </div>
     )
 }
